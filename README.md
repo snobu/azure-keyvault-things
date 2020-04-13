@@ -51,3 +51,4 @@ $ curl -s "https://alice.vault.azure.net/secrets/secret1?api-version=7.0" -H "Au
 }
 
 ```
+Note that you don't need to do this dance if you use the Azure SDK in your application (it will get the access token for you).
