@@ -28,13 +28,15 @@ Get a Key Vault access token from an Azure VM with Managed Identity enabled -
 # Test the token endpoint
  $ curl -s "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fvault.azure.net" -H "Metadata: true"
 
-You should see an access token being returned. Note the resource for Key Vault is always https://vault.azure.net (URL encoded), no trailing slash, no Key Vault instance name.
+You should see an access token being returned.
+Note the resource for Key Vault is always https://vault.azure.net (URL encoded),
+no trailing slash, no Key Vault instance name.
 
 # Save the access token to a bash variable
 $ TOKEN=$(curl -s "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fvault.azure.net" -H "Metadata: true" | jq -r ".access_token")
 
 # Get a secret from Key Vault
-$  curl -s "https://alice.vault.azure.net/secrets/secret1?api-version=7.0" -H "Authorization: Bearer $TOKEN" | jq
+$ curl -s "https://alice.vault.azure.net/secrets/secret1?api-version=7.0" -H "Authorization: Bearer $TOKEN" | jq
 
 {
   "value": "TH3 VALU3 0F THE S3CRE7",
