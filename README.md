@@ -1,5 +1,7 @@
 # azure-keyvault-things
 
+![](https://i1.wp.com/cloudyjourney.fr/wp-content/uploads/2018/01/Keyvault.png?resize=300%2C200&ssl=1)
+
 ## Included Projects
 
 * `KeyVaultAspNet47/` ASP.NET (.NET Framework 4.7.2) application that calls Azure Key Vault in various ways
