@@ -1,6 +1,6 @@
 # azure-keyvault-things
 
-![](https://i1.wp.com/cloudyjourney.fr/wp-content/uploads/2018/01/Keyvault.png?resize=300%2C200&ssl=1)
+![kv](https://user-images.githubusercontent.com/6472374/79210609-c91e2900-7e4d-11ea-9bd1-4b356714e2c1.png)
 
 ## Included Projects
 
