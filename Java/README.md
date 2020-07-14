@@ -9,12 +9,12 @@ When running in Azure, it will try to use Managed Identity if enabled (no need t
 See this for more:
 https://github.com/Azure/azure-sdk-for-java/tree/master/sdk/identity/azure-identity#key-concepts
 
-To develop locally create an `env_secrets.sh` bash script with the following content:
+To develop locally create a `.env` file with the following content:
 
-```bash
-export AZURE_CLIENT_ID=xxx
-export AZURE_CLIENT_SECRET=yyy
-export AZURE_TENANT_ID=zzz
+```
+AZURE_TENANT_ID=<Your tenant ID>
+AZURE_CLIENT_ID=<Service principal client ID>
+AZURE_CLIENT_SECRET=<Service principal secret>
 ```
 
 This is later used by `make run` to populate those environment variables before booting the application.
