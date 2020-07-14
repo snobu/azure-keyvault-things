@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using Azure.Identity;
-using Microsoft.Azure.KeyVault;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Security.KeyVault.Certificates;
 using Microsoft.Azure.Services.AppAuthentication;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
+using Azure.Core;
 
 namespace KeyVaultAspNet47.Controllers
 {
@@ -36,12 +33,25 @@ namespace KeyVaultAspNet47.Controllers
 
             // Via Key Vault SDK
             string keyVaultInstance = "https://alice.vault.azure.net";
-            SecretClient secretClient = new SecretClient(new Uri(keyVaultInstance), new DefaultAzureCredential());
-            KeyVaultSecret secret = await secretClient.GetSecretAsync("from-NET-SDK");
+            // Retry policy
+            // https://docs.microsoft.com/en-us/azure/key-vault/general/overview-throttling
+            SecretClientOptions options = new SecretClientOptions()
+            {
+                Retry =
+                    {
+                        Delay= TimeSpan.FromSeconds(2),
+                        MaxDelay = TimeSpan.FromSeconds(16),
+                        MaxRetries = 5,
+                        Mode = RetryMode.Exponential
+                    }
+            };
+            // Instantiate client with retry policy (options)
+            SecretClient secretClient = new SecretClient(new Uri(keyVaultInstance), new DefaultAzureCredential(), options);
+            KeyVaultSecret secret = await secretClient.GetSecretAsync("secret1");
             ViewBag.ViaSDK = secret.Value;
 
             // Via configBuilder (see web.config)
-            ViewBag.ViaBuilder = ConfigurationManager.AppSettings["secret2"];
+            ViewBag.ViaBuilder = ConfigurationManager.AppSettings["secret1"];
 
             // Manual REST API calls
             AzureServiceTokenProvider tokenProvider = new AzureServiceTokenProvider();
@@ -68,7 +78,7 @@ namespace KeyVaultAspNet47.Controllers
 
             // Get certificate from Key Vault
             CertificateClient certClient = new CertificateClient(new Uri(keyVaultInstance), new DefaultAzureCredential());
-            KeyVaultCertificate cert = await certClient.GetCertificateAsync("rsa-cert-pem");
+            KeyVaultCertificate cert = await certClient.GetCertificateAsync("Joes-Crab-Shack-RSA");
             X509Certificate2 x509cert = new X509Certificate2(cert.Cer);
             ViewBag.CertSubject = x509cert.Subject;
             ViewBag.CertId = cert.Id;

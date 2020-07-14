@@ -1,0 +1,2 @@
+build:
+	fpc secrets.pas

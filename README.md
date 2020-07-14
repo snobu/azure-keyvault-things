@@ -4,9 +4,20 @@
 
 ## Included Projects
 
-* `KeyVaultAspNet47/` ASP.NET (.NET Framework 4.7.2) application that calls Azure Key Vault in various ways
+* `dotnet` An ASP.NET (.NET Framework 4.7.2) application that calls Azure Key Vault in various ways, and an ASP.NET Core application that calls Key Vault with Dependency Injection.
 
-* `KeyVaultAspNetCore/` ASP.NET Core 3.1 application that calls Key Vault via dependency injection
+* `TypeScript` Retrieves secrets and keys from Key Vault in TypeScript.
+
+* `Go` Go code that calls Key Vault to retrieve secrets and and sign a digest with a HSM key.
+
+* `Java` Sample code in Java that calls Key Vault to retrieve secrets and certificates.
+
+* `Python` Python 3.x code that gets a secret from Key Vault. Applicable for Python 2.x as well.
+
+* `Pascal` Free Pascal sample that uses raw HTTP calls to get an access token via Managed Identity and retrieve a secret from Key Vault.
+
+* `REST` Sample REST API calls for retrieving secrets and keys. It also demonstrates sign and verify operations.
+
 
 ## Resources
 
@@ -53,4 +64,4 @@ $ curl -s "https://alice.vault.azure.net/secrets/secret1?api-version=7.0" -H "Au
 }
 
 ```
-Note that you don't need to do this dance if you use the Azure SDK in your application (it will get the access token for you).
+Note that you don't need to do this dance if you use the Azure SDK in your application (Azure.Identity will get the access token for you).

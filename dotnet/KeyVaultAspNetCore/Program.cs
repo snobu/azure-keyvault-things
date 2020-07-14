@@ -61,9 +61,6 @@ namespace KeyVaultAspNetCore
 
 #if Managed
         #region snippet2
-        // using Microsoft.Azure.KeyVault;
-        // using Microsoft.Azure.Services.AppAuthentication;
-        // using Microsoft.Extensions.Configuration.AzureKeyVault;
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)

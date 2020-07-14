@@ -1,0 +1,74 @@
+# Install the "REST Client" extension in VS Code to easily run all this
+# https://github.com/Huachao/vscode-restclient
+# https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+# About Keys
+# https://docs.microsoft.com/en-us/azure/key-vault/keys/about-keys
+
+# Get Key
+# https://docs.microsoft.com/en-us/rest/api/keyvault/getkey/getkey
+GET https://alice.vault.azure.net/keys/rsa-key-in-hsm?api-version=7.0
+Authorization: {{ $aadToken microsoft.com aud:https://vault.azure.net }}
+
+###
+
+# @name Sign
+# Creates a signature from a digest using the specified key.
+# https://docs.microsoft.com/en-us/rest/api/keyvault/sign/sign
+POST https://alice.vault.azure.net/keys/rsa-key-in-hsm/sign?api-version=7.0
+Content-Type: application/json
+Authorization: {{ $aadToken microsoft.com aud:https://vault.azure.net }}
+
+{
+  "alg": "RS512",
+  // printf "Where does Tiger King store its secrets?" | sha256sum | awk '{printf $1}' | base64 -w 100
+  "value": "NDY1ZDE0OTc1MTUyOTljOWNlZTA3MmQyMjBlODRmYTI1ZWEzZmIxM2E4MzRhMTVjODAyYTE2M2I2ZDM2YzEwNw=="
+}
+
+###
+
+# @name Verify
+# Verifies a signature using a specified key.
+# https://docs.microsoft.com/en-us/rest/api/keyvault/verify/verify
+POST https://alice.vault.azure.net/keys/rsa-key-in-hsm/verify?api-version=7.0
+Content-Type: application/json
+Authorization: {{ $aadToken microsoft.com aud:https://vault.azure.net }}
+
+{
+    "alg": "RS512",    
+    "digest": "NDY1ZDE0OTc1MTUyOTljOWNlZTA3MmQyMjBlODRmYTI1ZWEzZmIxM2E4MzRhMTVjODAyYTE2M2I2ZDM2YzEwNw==",
+    "value": "{{ Sign.response.body.$.value }}"
+}
+
+###
+
+# @name Wrapkey
+# https://docs.microsoft.com/en-us/rest/api/keyvault/wrapkey/wrapkey
+# Wraps a symmetric key using a specified key.
+# The WRAP operation supports encryption of a symmetric key using
+# a key encryption key that has previously been stored in an Azure Key Vault.
+POST https://alice.vault.azure.net/keys/rsa-key-in-hsm/wrapkey?api-version=7.0
+Content-Type: application/json
+Authorization: {{ $aadToken microsoft.com aud:https://vault.azure.net }}
+
+{
+  "alg": "RSA-OAEP-256",
+  "value": "c3VwZXJfc2VjcmV0X3N5bW1ldHJpY19rZXkK"
+}
+
+###
+
+# @name Unwrapkey
+# https://docs.microsoft.com/en-us/rest/api/keyvault/unwrapkey/unwrapkey
+# Unwraps a symmetric key using the specified key that was initially
+# used for wrapping that key.
+# The UNWRAP operation supports decryption of a symmetric key using the
+# target key encryption key. 
+POST https://alice.vault.azure.net/keys/rsa-key-in-hsm/unwrapkey?api-version=7.0
+Content-Type: application/json
+Authorization: {{ $aadToken microsoft.com aud:https://vault.azure.net }}
+
+{
+  "alg": "RSA-OAEP-256",
+  "value": "{{ Wrapkey.response.body.$.value }}"
+}

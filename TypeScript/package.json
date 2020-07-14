@@ -1,0 +1,13 @@
+{
+  "license": "MIT",
+  "dependencies": {
+    "@azure/identity": "^1.0.3",
+    "@azure/keyvault-keys": "^4.0.4",
+    "@azure/keyvault-secrets": "^4.0.4",
+    "dotenv": "^8.2.0"
+  },
+  "scripts": {
+    "build": "tsc --pretty",
+    "launch": "node secrets.js"
+  }
+}

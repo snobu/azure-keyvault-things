@@ -355,3 +355,12 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Ignore transpiled files, Python bytecode and more
+.env
+Python/*.pyc
+TypeScript/*.js
+node_modules
+Go/secrets/secrets
+Go/sign/sign
+Pascal/secrets

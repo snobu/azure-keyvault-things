@@ -30,14 +30,17 @@ namespace KeyVaultAspNetCore.Controllers
 
         public IActionResult Secrets()
         {
-            // SecretName (Name in Key Vault: 'secret1')
+            // When running locally secret value is read from dotnet Secret Manager,
+            // when on Azure secret is fetched from Key Vault via DI.
+            // Secret name in Key Vault: 'secret1'
             ViewBag.secret1 = _configuration["secret1"];
 
-            // Hierarchical keys: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1#configuration-keys-and-values
-            // Section:SecretName (Name in Key Vault: 'GitHub--ApiKey')
+            // Hierarchical keys:
+            // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1#configuration-keys-and-values
+            // Secret name in Key Vault: 'GitHub--ApiKey'
             ViewBag.ApiKey1 = _configuration["GitHub:ApiKey"];
 
-            // Section:SecretName (Name in Key Vault: 'GitHub--ApiKey')
+            // Secret name in Key Vault: 'GitHub--ApiKey'
             ViewBag.ApiKey2 = _configuration.GetSection("GitHub")["ApiKey"];
 
             return View();
