@@ -357,7 +357,7 @@ MigrationBackup/
 .ionide/
 
 # Ignore transpiled files, Python bytecode and more
-.env
+**/.env
 Python/*.pyc
 TypeScript/*.js
 node_modules
