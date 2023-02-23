@@ -7,15 +7,10 @@ The language syntax is semantically compatible with Turbo Pascal 7.0 as well as 
 ## Usage
 1. Enable Managed Identity on the VM and assign permissions for that VM in your Key Vault (Secret Get operation)
 
+2. Get an Ubuntu image (18.04 or above) and `apt get install fpc lazarus`.
+
 2. Compile and run:
     ```sh
     $ make
     $ ./secrets
     ```
-
-Tested with:
-```sh
-$ fpc
-Free Pascal Compiler version 3.0.0+dfsg-2 [2016/01/28] for x86_64
-Copyright (c) 1993-2015 by Florian Klaempfl and others
-```
