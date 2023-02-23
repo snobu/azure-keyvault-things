@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-# pip install azure-keyvault-secrets azure-identity
-
 import json
 import os
 from azure.identity import DefaultAzureCredential, InteractiveBrowserCredential
